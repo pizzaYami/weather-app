@@ -11,8 +11,8 @@ function WeatherBox({ weather }) {
       <h1 id="title">{weather?.name}</h1>
       <h2>
         {isCelsius
-          ? `${weather?.main.temp}°C`
-          : `${weather?.main.temp * 1.8 + 32}℉`}
+          ? `${Number(weather?.main.temp).toFixed(1)}°C`
+          : `${Number(weather?.main.temp * 1.8 + 32).toFixed(1)}℉`}
       </h2>
       <h3>{weather?.weather[0].description}</h3>
     </div>
