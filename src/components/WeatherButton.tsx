@@ -2,20 +2,14 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function WeatherButton({ cities, setCity }) {
+function WeatherButton({ cities, setCity, city }) {
   return (
-    <div>
-      <Button
-        variant="warning"
-        onClick={() => {
-          setCity("");
-        }}
-      >
-        Current Location
-      </Button>
+    <div className="BtnContainer">
       {cities.map((item) => (
         <Button
-          variant="warning"
+          className={`btn ${
+            item === city ? "btn-primary" : "btn-light"
+          } btn-outline-black`}
           key={item}
           onClick={() => {
             setCity(item);
