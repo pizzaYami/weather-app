@@ -2,12 +2,21 @@ import React from "react";
 import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-function WeatherButton() {
+function WeatherButton({ cities, setCity }) {
   return (
     <div>
       <Button variant="warning">Current Location</Button>
-      <Button variant="warning">Paris</Button>
-      <Button variant="warning">New York</Button>
+      {cities.map((item) => (
+        <Button
+          variant="warning"
+          key={item}
+          onClick={() => {
+            setCity(item);
+          }}
+        >
+          {item}
+        </Button>
+      ))}
     </div>
   );
 }
