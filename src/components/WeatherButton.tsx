@@ -5,7 +5,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function WeatherButton({ cities, setCity }) {
   return (
     <div>
-      <Button variant="warning">Current Location</Button>
+      <Button
+        variant="warning"
+        onClick={() => {
+          setCity("");
+        }}
+      >
+        Current Location
+      </Button>
       {cities.map((item) => (
         <Button
           variant="warning"

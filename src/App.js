@@ -3,6 +3,8 @@ import "./App.css";
 import WeatherBox from "./components/WeatherBox.tsx";
 import WeatherButton from "./components/WeatherButton.tsx";
 import backgroundVideo from "./assets/backgroundVideo.mp4";
+import ClipLoader from "react-spinners/ClipLoader";
+
 // 1. 앱이 실행되자마자 현재위치기반의 날씨가 보인다.
 // 2. 날씨정보에는 도씨, 섭씨, 화씨 날씨상태
 // 3. 5개의 버튼이 있다. (1개는 현재위치, 4개는 다른도시)
@@ -13,6 +15,7 @@ import backgroundVideo from "./assets/backgroundVideo.mp4";
 function App() {
   const [weather, setWeather] = useState(null);
   const [city, setCity] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const cities = ["paris", "new york", "tokyo"];
 
@@ -26,15 +29,19 @@ function App() {
 
   const getWeatherByCurrentLocation = async (lat, lon) => {
     let url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=d4e60d59c633b09b47705dcc3af310f0&units=metric&lang=kr`;
+    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
+    setLoading(false);
     setWeather(data);
   };
 
   const getWeatherByCity = async () => {
     let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=d4e60d59c633b09b47705dcc3af310f0&units=metric&lang=kr`;
+    setLoading(true);
     let response = await fetch(url);
     let data = await response.json();
+    setLoading(false);
     setWeather(data);
   };
 
@@ -56,10 +63,20 @@ function App() {
         loop
         className="background"
       />
-      <div className="wrap">
-        <WeatherBox weather={weather} />
-        <WeatherButton cities={cities} setCity={setCity} />
-      </div>
+      {loading ? (
+        <ClipLoader
+          color="#f88c6b"
+          loading={loading}
+          size={150}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      ) : (
+        <div className="wrap">
+          <WeatherBox weather={weather} />
+          <WeatherButton cities={cities} setCity={setCity} />
+        </div>
+      )}
     </div>
   );
 }
